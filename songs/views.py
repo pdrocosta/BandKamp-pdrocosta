@@ -14,12 +14,11 @@ class SongView(generics.ListCreateAPIView):
     serializer_class = SongSerializer
 
 
-    def perform_create(self, serializer):
-        album = get_object_or_404(Album, id=self.kwargs.get('album_id'))
-        serializer.save(album=album)
-
     def get_queryset(self):
-        queryset = super().get_queryset()
-        album = get_object_or_404(Album, id=self.kwargs.get("album_id"))
+        album = get_object_or_404(Album, pk=self.kwargs.get("pk"))
+        songs = Song.objects.filter(album_id=album.pk)
+        return songs
 
-        return queryset.filter(album=album)
+    def perform_create(self, serializer):
+        album = get_object_or_404(Album, pk=self.kwargs.get('pk'))
+        serializer.save(album_id=album.pk)

@@ -8,11 +8,9 @@ from .models import Song
 
 
 class SongSerializer(serializers.ModelSerializer):
-    album = AlbumSerializer()
+    
     class Meta:
         model = Song
-        fields = '__all__'
-        read_only_fields = ['album']
+        fields = ["id", 'title', 'duration', 'album_id']
     
-    def create(self, validated_data):
-        return Song.objects.create(**validated_data)
+   
