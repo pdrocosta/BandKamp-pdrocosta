@@ -15,5 +15,4 @@ class SongSerializer(serializers.ModelSerializer):
         read_only_fields = ['album']
     
     def create(self, validated_data):
-        album = get_object_or_404(Album, id = validated_data.album.id)
-        return Song.objects.create(**validated_data, album = album)
+        return Song.objects.create(**validated_data)
